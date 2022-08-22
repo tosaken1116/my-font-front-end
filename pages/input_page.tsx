@@ -1,4 +1,5 @@
 import DrawCanvas from "./components/draw_canvas";
+import Header from "./components/header";
 export default function InputPage() {
   const dammys = [
     {
@@ -24,6 +25,7 @@ export default function InputPage() {
   ];
   return (
     <div className="">
+      <Header></Header>
       <div>
         {dammys.map((dammy, index) => (
           <div className=" m-6 mx-auto w-56 justify-center">
