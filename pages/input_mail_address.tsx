@@ -30,7 +30,6 @@ export default function InputMailAddress() {
     setModalIsOpen(false);
   };
   const handleMailAddress = (event) => {
-    console.log(event.target.value);
     setMailAddress(event.target.value);
   };
   const submitMailAddress = (event) => {
