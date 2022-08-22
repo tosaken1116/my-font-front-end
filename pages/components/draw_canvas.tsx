@@ -5,11 +5,16 @@ import pointGroupArray, {
 } from "react-signature-canvas";
 
 type propsType = {
-  png: string;
+  method: any;
 };
 
 export default function DrawCanvas(props: propsType) {
   const [Image, setImage] = useState<string>();
+  const getImageURL = () => {
+    setImage((canvasRef.current as pointGroupArray).toDataURL());
+    console.log(Image);
+    props.method(Image);
+  };
   const canvasRef = useRef<ReactSignatureCanvas | null>();
   return (
     <div className=" h-[216px] w-[216px] bg-white  ">
@@ -36,7 +41,7 @@ export default function DrawCanvas(props: propsType) {
           canvasProps={{ width: 200, height: 200 }}
           backgroundColor="rgba(0,0,0,0)"
           onEnd={() => {
-            setImage((canvasRef.current as pointGroupArray).toDataURL());
+            getImageURL();
           }}
         />
       </div>
