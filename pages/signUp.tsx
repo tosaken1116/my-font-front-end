@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { signIn } from "../methods/signIn";
 
 const initialErrorState = {
     name: false,
@@ -10,12 +9,12 @@ const initialErrorState = {
     confirmPassword: false,
 };
 export default function Signup() {
-    const initialErrorStatus = {
+    const initialSignUpErrorStatus = {
         name: false,
         mailAddressInUse: false,
         mailAddressValueError: false,
     };
-    const [errorStatus, setErrorStatus] = useState(initialErrorStatus);
+    const [errorStatus, setErrorStatus] = useState(initialSignUpErrorStatus);
     const router = useRouter();
     const url = "https://edd-myfont-backend.herokuapp.com";
     type signUpCheckElement = {
@@ -36,7 +35,6 @@ export default function Signup() {
         event.preventDefault();
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
-        console.log(formData);
     };
     const signUp = async () => {
         try {
@@ -45,13 +43,19 @@ export default function Signup() {
                 email: formData.mailAddress,
                 password: formData.password,
             });
-            console.log(response.statusText);
-            console.log(response);
-            signIn({
-                email: formData.mailAddress,
-                password: formData.password,
-            });
-            router.push("/");
+            try {
+                const response = await axios.post(
+                    url + "/api/v1/users/signin",
+                    {
+                        email: formData.mailAddress,
+                        password: formData.password,
+                    }
+                );
+                document.cookie = "accessToken=" + response.data.jwt;
+                router.push("/");
+            } catch (error) {
+                console.log(error.response);
+            }
         } catch (error) {
             console.log(error.response.status);
             let responseErrorStatus = Object.assign({}, errorStatus);
