@@ -1,9 +1,34 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Modal from "react-modal";
+import ReportModal from "./components/report_modal";
+
 import DrawCanvas from "./components/draw_canvas";
 import Header from "./components/header";
 export default function InputPage() {
   const router = useRouter();
+  const customStyles = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      backgroundColor: "rgba(0,0,0,0.3)",
+    },
+
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      width: "400px",
+      height: "300px",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "white",
+    },
+  };
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+
   const [downloadURL1, setDownloadURL1] = useState("");
   const [downloadURL2, setDownloadURL2] = useState("");
   const [downloadURL3, setDownloadURL3] = useState("");
@@ -39,18 +64,24 @@ export default function InputPage() {
     console.log(downloadURL4);
     console.log(downloadURL5);
   };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
   const changeCanvasToImage = (event) => {
     event.preventDefault();
-    console.log(downloadURL1);
-    console.log(downloadURL2);
-    console.log(downloadURL3);
-    console.log(downloadURL4);
-    console.log(downloadURL5);
-    router.push("./input_mail_address");
+    setModalIsOpen(true);
   };
   return (
     <div className="">
       <Header></Header>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        ariaHideApp={false}
+        style={customStyles}
+      >
+        <ReportModal></ReportModal>
+      </Modal>
       <div>
         {dammys.map((dammy, index) => (
           <div className=" m-6 mx-auto w-56 justify-center">
