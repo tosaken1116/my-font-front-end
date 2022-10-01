@@ -2,10 +2,35 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useState } from "react";
+import Modal from "react-modal";
+import ReportModal from "./components/report_modal";
+
 import DrawCanvas from "./components/draw_canvas";
 import Header from "./components/header";
 export default function InputPage() {
   const router = useRouter();
+  const customStyles = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      backgroundColor: "rgba(0,0,0,0.3)",
+    },
+
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      width: "400px",
+      height: "300px",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "white",
+    },
+  };
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+
   const cookie = parseCookies();
   const url = "https://edd-myfont-backend.herokuapp.com";
   const [downloadURL1, setDownloadURL1] = useState("");
@@ -35,9 +60,12 @@ export default function InputPage() {
       method: setDownloadURL5,
     },
   ];
-
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
   const changeCanvasToImage = async (event) => {
     event.preventDefault();
+    setModalIsOpen(true);
     console.log("=====================");
     console.log(cookie.AccessToken);
     console.log("=====================");
@@ -87,6 +115,14 @@ export default function InputPage() {
   return (
     <div className="">
       <Header></Header>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        ariaHideApp={false}
+        style={customStyles}
+      >
+        <ReportModal></ReportModal>
+      </Modal>
       <div>
         {dammys.map((dammy, index) => (
           <div key={index} className=" m-12 mx-auto w-56 justify-center">
