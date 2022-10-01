@@ -1,8 +1,6 @@
-import axios from "axios";
 import { useRouter } from "next/router";
-import { parseCookies, setCookie } from "nookies";
 import { useState } from "react";
-
+import { signIn } from "../methods/signIn";
 const initialErrorState = {
     mailAddress: false,
     password: false,
@@ -36,34 +34,8 @@ export default function SignIn() {
         setFormData({ ...formData, [name]: value });
         console.log(formData);
     };
-    const signIn = async () => {
-        try {
-            const response = await axios.post(url + "/api/v1/users/signin", {
-                email: formData.mailAddress,
-                password: formData.password,
-            });
-            console.log(response.statusText);
-            console.log(response);
-            document.cookie = "accessToken=" + response.data.jwt;
-            // setCookie(null, "accessToken", response.data.jwt, {
-            //     maxAge: 30 * 24 * 60 * 60,
-            // });
-            // const cookies = parseCookies();
-            // console.log(cookies);
-            router.push("/");
-        } catch (error) {
-            console.log(error.response.status);
-            let responseErrorStatus = Object.assign({}, errorStatus);
-            if (error.response.status == 422) {
-                responseErrorStatus.mailAddressValueError = true;
-            } else if (error.response.status == 400) {
-                responseErrorStatus.passwordIncorrect = true;
-            }
-            setErrorStatus(responseErrorStatus);
-            console.log(errorStatus);
-        }
-    };
-    const signInCheck = (event) => {
+
+    const signInCheck = async (event) => {
         event.preventDefault();
         console.log(initialErrorState);
 
@@ -74,7 +46,8 @@ export default function SignIn() {
             formError.password = true;
         }
         if (!formError.password && !formError.mailAddress) {
-            signIn();
+            const error = await signIn(formData);
+            setErrorStatus(error);
             // router.push("/");
         }
         setFormErrors(formError);
@@ -82,7 +55,7 @@ export default function SignIn() {
     return (
         <div>
             <div className="mt-4 text-center text-3xl">サインイン</div>
-            <div className="mx-12 mt-8 rounded border-4 border-amber-200 bg-amber-200">
+            <div className="mx-12 mt-8 rounded-full border-4 border-green-300 bg-green-200 p-8">
                 <form onSubmit={signInCheck}>
                     <div className="flex flex-col">
                         <div className="mx-4 mt-4 text-sm">メールアドレス</div>
@@ -93,7 +66,7 @@ export default function SignIn() {
                             placeholder="example@example.com"
                         ></input>
                         {errorStatus.mailAddressValueError && (
-                            <div className="mx-4 mb-2 text-xs text-red-500">
+                            <div className="mx-4 mb-2 text-xs text-blue-500">
                                 無効なメールアドレスです
                             </div>
                         )}
@@ -122,7 +95,7 @@ export default function SignIn() {
                     <div className="flex grid-cols-3 flex-row-reverse">
                         <button
                             type="submit"
-                            className="mx-auto my-4 rounded border-2 border-red-300 bg-red-300 p-1 font-semibold text-white hover:border-red-400 hover:bg-red-400"
+                            className="mx-auto my-4 rounded border-2 border-blue-300 bg-blue-300 p-1 font-semibold text-white hover:border-blue-400 hover:bg-blue-400 hover:duration-200"
                         >
                             サインイン
                         </button>
