@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { getCookies } from "../methods/getCookies";
@@ -35,7 +34,6 @@ export default function InputPage() {
     };
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
-    const cookie = parseCookies();
     const url = "https://edd-myfont-backend.herokuapp.com";
     const [downloadURL1, setDownloadURL1] = useState("");
     const [downloadURL2, setDownloadURL2] = useState("");
@@ -106,10 +104,8 @@ export default function InputPage() {
                     },
                 }
             );
-            console.log(response);
             setAxiosSuccess(true);
         } catch (error) {
-            console.log(error);
             setAxiosError(true);
         }
         setModalIsOpen(true);
@@ -119,8 +115,7 @@ export default function InputPage() {
         if (cookies == null) {
             router.push("/topPage");
         }
-        console.log(cookies);
-    }, []);
+    }, [router]);
     return (
         <div className="">
             <Header></Header>

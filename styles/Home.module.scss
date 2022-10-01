@@ -1,3 +1,4 @@
+Home.module.scss
 .container {
   padding: 0 2rem;
 }
@@ -126,4 +127,24 @@
   .logo img {
     filter: invert(1);
   }
+}
+.delay-time01{
+  animation-delay: 0.1s;
+  }
+.delay-time02{
+animation-delay: 0.2s;
+}
+.delay-time03{
+  animation-delay: 0.3s;
+}
+.delay-time04{
+animation-delay: 0.4s;
+}
+.delay-time05{
+  animation-delay: 0.5s;
+}
+
+
+.pickup {
+  transform: rotate(-45deg);
 }
