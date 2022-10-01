@@ -7,7 +7,7 @@ const initialErrorState = {
   password: false,
   confirmPassword: false,
 };
-export default function signUpCheck() {
+export default function Signup() {
   const initialErrorStatus = {
     mailAddressInUse: false,
     mailAddressValueError: false,
