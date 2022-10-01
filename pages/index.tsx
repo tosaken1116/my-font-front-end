@@ -1,6 +1,17 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { getCookies } from "../methods/getCookies";
 import Header from "./components/header";
 export default function Home() {
+    const router = useRouter();
+    useEffect(() => {
+        const cookies = getCookies("accessToken");
+        if (cookies == null) {
+            router.push("/TopPage");
+        }
+        console.log(cookies);
+    }, []);
     return (
         <div>
             <Header></Header>
