@@ -7,6 +7,14 @@ module.exports = {
   ],
   presets: [],
   theme: {
+    extend: {
+      fontFamily: {
+        reggae: ['Reggae One'],
+        kosugi: ['Kosugi Maru'],
+        zenkaku: ['Zen Kaku Gothic New'],
+        hatimaru:['Hachi Maru Pop']
+      },
+    },
     screens: {
       sm: '640px',
       md: '768px',
@@ -137,7 +145,7 @@ module.exports = {
     animation: {
       none: 'none',
       spin: 'spin 1s linear infinite',
-      ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+      ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) 1',
       pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       bounce: 'bounce 1s infinite',
     },
