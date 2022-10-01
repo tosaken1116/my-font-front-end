@@ -89,7 +89,7 @@ export default function InputPage() {
       <Header></Header>
       <div>
         {dammys.map((dammy, index) => (
-          <div className=" m-12 mx-auto w-56 justify-center">
+          <div key={index} className=" m-12 mx-auto w-56 justify-center">
             <DrawCanvas key={index} method={dammy.method}></DrawCanvas>
             <div className="mt-16 text-center text-lg text-red-500">
               {dammy.character}
