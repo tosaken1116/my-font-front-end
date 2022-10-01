@@ -4,6 +4,10 @@ import { useEffect } from "react";
 import { getCookies } from "../methods/getCookies";
 import Header from "./components/header";
 export default function Home() {
+    const logOut = () => {
+        document.cookie = "accessToken" + "=;max-age=0";
+        router.push("/topPage");
+    };
     const router = useRouter();
     useEffect(() => {
         const cookies = getCookies("accessToken");
@@ -27,6 +31,12 @@ export default function Home() {
                         みんなのフォントを見る
                     </a>
                 </Link>
+                <button
+                    onClick={logOut}
+                    className="m-3 rounded-full border-2 border-[#22bb44] bg-gradient-to-b from-[#0a621d] to-[#15692751] p-4 hover:scale-110 hover:transform hover:border-[#2231bb] hover:from-[#0a1f62] hover:duration-500 peer-hover:scale-100"
+                >
+                    サインアウト
+                </button>
             </div>
         </div>
     );
