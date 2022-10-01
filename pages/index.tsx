@@ -8,7 +8,7 @@ export default function Home() {
     useEffect(() => {
         const cookies = getCookies("accessToken");
         if (cookies == null) {
-            router.push("/TopPage");
+            router.push("/topPage");
         }
         console.log(cookies);
     }, []);
