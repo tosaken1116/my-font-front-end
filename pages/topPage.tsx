@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function topPage() {
+export default function TopPage() {
     const [onhover, setOnHover] = useState<number>(1);
     const classNameArray = [
         "text-red-400",
@@ -16,11 +16,7 @@ export default function topPage() {
         "text-pink-400",
     ];
     const [click, setClick] = useState(false);
-    const [stringToExist, setsSringToExist] = useState(true);
     const fontArray = [" font-reggae", " font-kosugi", " font-zenkaku"];
-    useEffect(() => {
-        setsSringToExist(false);
-    }, [click]);
     return (
         <div className="font-hatimaru">
             <div>
