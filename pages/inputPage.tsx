@@ -4,11 +4,15 @@ import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { getCookies } from "../methods/getCookies";
-import DrawCanvas from "./components/draw_canvas";
+import DrawCanvas from "./components/drawCanvas";
+import ErrorModal from "./components/errorModal";
 import Header from "./components/header";
-import ReportModal from "./components/report_modal";
+import ReportModal from "./components/reportModal";
+
 export default function InputPage() {
     const router = useRouter();
+    const [axiosError, setAxiosError] = useState<boolean>(false);
+    const [axiosSuccess, setAxiosSuccess] = useState<boolean>(false);
     const customStyles = {
         overlay: {
             position: "fixed",
@@ -62,10 +66,10 @@ export default function InputPage() {
     ];
     const closeModal = () => {
         setModalIsOpen(false);
+        router.push("/");
     };
     const changeCanvasToImage = async (event) => {
         event.preventDefault();
-        setModalIsOpen(true);
 
         try {
             const response = await axios.post(
@@ -103,9 +107,12 @@ export default function InputPage() {
                 }
             );
             console.log(response);
+            setAxiosSuccess(true);
         } catch (error) {
             console.log(error);
+            setAxiosError(true);
         }
+        setModalIsOpen(true);
     };
     useEffect(() => {
         const cookies = getCookies("accessToken");
@@ -123,7 +130,8 @@ export default function InputPage() {
                 ariaHideApp={false}
                 style={customStyles}
             >
-                <ReportModal></ReportModal>
+                {axiosSuccess && <ReportModal></ReportModal>}
+                {axiosError && <ErrorModal></ErrorModal>}
             </Modal>
             <div>
                 {dammys.map((dammy, index) => (
