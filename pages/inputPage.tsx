@@ -110,7 +110,7 @@ export default function InputPage() {
     useEffect(() => {
         const cookies = getCookies("accessToken");
         if (cookies == null) {
-            router.push("/TopPage");
+            router.push("/topPage");
         }
         console.log(cookies);
     }, []);
