@@ -11,34 +11,24 @@ type propsType = {
 export default function DrawCanvas(props: propsType) {
   const [Image, setImage] = useState<string>();
   const getImageURL = () => {
-    setImage((canvasRef.current as pointGroupArray).toDataURL());
+    setImage((canvasRef.current as pointGroupArray).toDataURL("image/png"));
     console.log(Image);
-    props.method(Image);
+    const dataURL = (canvasRef.current as pointGroupArray).toDataURL(
+      "image/png"
+    );
+    props.method(() => dataURL);
+    // props.method(() => Image);
   };
   const canvasRef = useRef<ReactSignatureCanvas | null>();
   return (
-    <div className=" h-[216px] w-[216px] bg-white  ">
-      {/* <div className=" h-[516px] w-[516px] border-8 border-yellow-400">
-        <div className=" z-5 absolute bottom-2 left-2">
-          <div className=" grid grid-cols-2">
-            <div className=" grid grid-rows-2">
-              <div className=" h-[250px] w-[250px] border-2 border-dashed"></div>
-              <div className=" h-[250px] w-[250px] border-2 border-dashed"></div>
-            </div>
-            <div className="grid grid-rows-2">
-              <div className=" h-[250px] w-[250px] border-2 border-dashed "></div>
-              <div className=" h-[250px] w-[250px] border-2 border-dashed"></div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      <div className=" h-[216px] w-[216px] border-8 border-black">
+    <div className=" -ml-[20px] h-[272px] w-[272px] bg-white  ">
+      <div className=" h-[272px] w-[272px] border-8 border-black">
         <SignatureCanvas
           ref={(ref) => {
             canvasRef.current = ref;
           }}
           penColor="black"
-          canvasProps={{ width: 200, height: 200 }}
+          canvasProps={{ width: 256, height: 256 }}
           backgroundColor="rgba(0,0,0,0)"
           onEnd={() => {
             getImageURL();
