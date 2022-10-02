@@ -1,17 +1,20 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Modal from "react-modal";
-import { getCookies } from "../methods/getCookies";
+// import { getCookies } from "../methods/getCookies";
 import DrawCanvas from "./components/drawCanvas";
 import ErrorModal from "./components/errorModal";
 import Header from "./components/header";
 import ReportModal from "./components/reportModal";
+import { getLocalStrage } from "../methods/getCookies";
 
 export default function InputPage() {
     const router = useRouter();
     const [axiosError, setAxiosError] = useState<boolean>(false);
     const [axiosSuccess, setAxiosSuccess] = useState<boolean>(false);
+    const [jwt, setJwt] = useState<string>('')
+    
     const customStyles = {
         overlay: {
             position: "fixed",
@@ -100,7 +103,7 @@ export default function InputPage() {
                     headers: {
                         Authorization:
                             "Bearer " +
-                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU1NDAwNzYuNTkwNjc5LCJ1c2VyX2lkIjoiYmQzYTk3ZmYtMmQzZC00ZDc3LWFjMGEtOWM0NmQ4N2I0ZWNkIn0.LjGW_qDdZiqRK2na8xi2Bw-eCJZmMgybni3k5mqTOSg",
+                            jwt,
                     },
                 }
             );
@@ -110,12 +113,12 @@ export default function InputPage() {
         }
         setModalIsOpen(true);
     };
-    useEffect(() => {
-        const cookies = getCookies("accessToken");
-        if (cookies == null) {
+    useLayoutEffect(() => {
+        setJwt(getLocalStrage('jwt'))
+        if (!jwt) {
             router.push("/topPage");
         }
-    }, [router]);
+    }, []);
     return (
         <div className="">
             <Header></Header>
