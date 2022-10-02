@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { getLocalStrage } from "../methods/getCookies";
 const initialErrorState = {
     mailAddress: false,
     password: false,
@@ -33,13 +34,19 @@ export default function SignIn() {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
+    // useLayoutEffect(() => {
+    //     if (!getLocalStrage('jwt')) {
+    //         router.push("/topPage");
+    //     }
+    // }, []);
     const signIn = async () => {
         try {
             const response = await axios.post(url + "/api/v1/users/signin", {
                 email: formData.mailAddress,
                 password: formData.password,
             });
-            document.cookie = "accessToken=" + response.data.jwt;
+            localStorage.setItem("jwt",response.data.jwt)
+            // document.cookie = "accessToken=" + response.data.jwt;
             router.push("/");
         } catch (error) {
             console.log(error.response);
@@ -54,6 +61,7 @@ export default function SignIn() {
     };
     const signInCheck = async (event) => {
         event.preventDefault();
+        
 
         let passwordPattern =
             /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}$/;

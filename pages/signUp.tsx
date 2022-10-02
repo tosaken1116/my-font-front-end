@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState,useLayoutEffect } from "react";
+import { getLocalStrage } from "../methods/getCookies";
+
 
 const initialErrorState = {
     name: false,
@@ -36,6 +38,11 @@ export default function Signup() {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
+    useLayoutEffect(() => {
+        if (!getLocalStrage('jwt')) {
+            router.push("/topPage");
+        }
+    }, []);
     const signUp = async () => {
         try {
             const response = await axios.post(url + "/api/v1/users/signup", {
