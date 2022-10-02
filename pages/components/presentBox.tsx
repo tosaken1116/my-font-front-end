@@ -1,4 +1,5 @@
-import { LeftPanel, RightPanel } from "./panel";
+import LeftPanel from "./leftPanel";
+import RightPanel from "./rightPanel";
 import TopPanel from "./topPanel";
 export default function PresentBox() {
     return (
