@@ -104,10 +104,8 @@ export default function InputPage() {
                     },
                 }
             );
-            console.log(response);
             setAxiosSuccess(true);
         } catch (error) {
-            console.log(error);
             setAxiosError(true);
         }
         setModalIsOpen(true);
@@ -117,7 +115,6 @@ export default function InputPage() {
         if (cookies == null) {
             router.push("/topPage");
         }
-        console.log(cookies);
     }, [router]);
     return (
         <div className="">

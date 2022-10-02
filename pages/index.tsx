@@ -14,7 +14,6 @@ export default function Home() {
         if (cookies == null) {
             router.push("/topPage");
         }
-        console.log(cookies);
     }, [router]);
     return (
         <div>
