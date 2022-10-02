@@ -1,20 +1,19 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { getCookies } from "../methods/getCookies";
+import { useLayoutEffect } from "react";
+import { getLocalStrage } from "../methods/getCookies";
 import Header from "./components/header";
 export default function Home() {
     const router = useRouter();
     const logOut = () => {
-        document.cookie = "accessToken" + "=;max-age=0";
+        localStorage.removeItem('jwt')
         router.push("/topPage");
     };
-    useEffect(() => {
-        const cookies = getCookies("accessToken");
-        if (cookies == null) {
+    useLayoutEffect(() => {
+        if (!getLocalStrage('jwt')) {
             router.push("/topPage");
         }
-    }, [router]);
+    }, []);
     return (
         <div>
             <Header></Header>
