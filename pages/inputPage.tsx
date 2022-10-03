@@ -115,7 +115,7 @@ export default function InputPage() {
     };
     useLayoutEffect(() => {
         setJwt(getLocalStrage('jwt'))
-        if (!jwt) {
+        if (!getLocalStrage('jwt')) {
             router.push("/topPage");
         }
     }, []);
