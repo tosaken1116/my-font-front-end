@@ -34,11 +34,6 @@ export default function SignIn() {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
-    // useLayoutEffect(() => {
-    //     if (!getLocalStrage('jwt')) {
-    //         router.push("/topPage");
-    //     }
-    // }, []);
     const signIn = async () => {
         try {
             const response = await axios.post(url + "/api/v1/users/signin", {
@@ -46,7 +41,6 @@ export default function SignIn() {
                 password: formData.password,
             });
             localStorage.setItem("jwt", response.data.jwt);
-            // document.cookie = "accessToken=" + response.data.jwt;
             router.push("/");
         } catch (error) {
             console.log(error.response);
