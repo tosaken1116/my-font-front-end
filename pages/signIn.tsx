@@ -40,7 +40,7 @@ export default function SignIn() {
                 email: formData.mailAddress,
                 password: formData.password,
             });
-            localStorage.setItem("jwt",response.data.jwt)
+            localStorage.setItem("jwt", response.data.jwt);
             router.push("/");
         } catch (error) {
             console.log(error.response);
@@ -55,7 +55,6 @@ export default function SignIn() {
     };
     const signInCheck = async (event) => {
         event.preventDefault();
-        
 
         let passwordPattern =
             /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}$/;
