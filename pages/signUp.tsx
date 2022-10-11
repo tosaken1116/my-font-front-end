@@ -38,11 +38,6 @@ export default function Signup() {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
-    useLayoutEffect(() => {
-        if (!getLocalStrage('jwt')) {
-            router.push("/topPage");
-        }
-    }, []);
     const signUp = async () => {
         try {
             const response = await axios.post(url + "/api/v1/users/signup", {
@@ -59,6 +54,7 @@ export default function Signup() {
                     }
                 );
                 document.cookie = "accessToken=" + response.data.jwt;
+                localStorage.setItem('jwt',response.data.jwt)
                 router.push("/");
             } catch (error) {
                 console.log(error.response);
