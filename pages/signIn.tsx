@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { getLocalStrage } from "../methods/getCookies";
+import { useState } from "react";
 const initialErrorState = {
     mailAddress: false,
     password: false,
@@ -13,7 +12,7 @@ export default function SignIn() {
     };
     const [errorStatus, setErrorStatus] = useState(initialErrorStatus);
     const router = useRouter();
-    const url = "https://edd-myfont-backend.herokuapp.com";
+    const url = "https://myfont.ottotto.tech";
     type signInCheckElement = {
         mailAddress: string;
         password: string;

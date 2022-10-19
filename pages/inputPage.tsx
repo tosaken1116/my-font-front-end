@@ -3,18 +3,18 @@ import { useRouter } from "next/router";
 import { useLayoutEffect, useState } from "react";
 import Modal from "react-modal";
 // import { getCookies } from "../methods/getCookies";
+import { getLocalStrage } from "../methods/getCookies";
 import DrawCanvas from "./components/drawCanvas";
 import ErrorModal from "./components/errorModal";
 import Header from "./components/header";
 import ReportModal from "./components/reportModal";
-import { getLocalStrage } from "../methods/getCookies";
 
 export default function InputPage() {
     const router = useRouter();
     const [axiosError, setAxiosError] = useState<boolean>(false);
     const [axiosSuccess, setAxiosSuccess] = useState<boolean>(false);
-    const [jwt, setJwt] = useState<string>('')
-    
+    const [jwt, setJwt] = useState<string>("");
+
     const customStyles = {
         overlay: {
             position: "fixed",
@@ -37,7 +37,7 @@ export default function InputPage() {
     };
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
-    const url = "https://edd-myfont-backend.herokuapp.com";
+    const url = "https://myfont.ottotto.tech";
     const [downloadURL1, setDownloadURL1] = useState("");
     const [downloadURL2, setDownloadURL2] = useState("");
     const [downloadURL3, setDownloadURL3] = useState("");
@@ -101,21 +101,20 @@ export default function InputPage() {
                 },
                 {
                     headers: {
-                        Authorization:
-                            "Bearer " +
-                            jwt,
+                        Authorization: "Bearer " + jwt,
                     },
                 }
             );
             setAxiosSuccess(true);
+            setModalIsOpen(true);
         } catch (error) {
             setAxiosError(true);
+            setModalIsOpen(true);
         }
-        setModalIsOpen(true);
     };
     useLayoutEffect(() => {
-        setJwt(getLocalStrage('jwt'))
-        if (!getLocalStrage('jwt')) {
+        setJwt(getLocalStrage("jwt"));
+        if (!getLocalStrage("jwt")) {
             router.push("/topPage");
         }
     }, []);
@@ -147,7 +146,6 @@ export default function InputPage() {
                     </div>
                 ))}
             </div>
-            <button onClick={changeCanvasToImage}>testボタン</button>
             <div className="mx-auto w-36 rounded border-2 border-cyan-400 bg-cyan-200 text-center text-black hover:bg-cyan-600 hover:text-white">
                 <button onClick={changeCanvasToImage}>データを送信する</button>
             </div>
