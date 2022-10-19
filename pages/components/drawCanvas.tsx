@@ -20,7 +20,6 @@ export default function DrawCanvas(props: propsType) {
             "image/png"
         );
         props.method(dataURL);
-        console.log(dataURL);
     }, [Image]);
     return (
         <div className=" -ml-[20px] h-[272px] w-[272px] bg-white  ">
