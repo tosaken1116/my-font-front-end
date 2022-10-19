@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState,useLayoutEffect } from "react";
-import { getLocalStrage } from "../methods/getCookies";
-
+import { useState } from "react";
 
 const initialErrorState = {
     name: false,
@@ -18,7 +16,7 @@ export default function Signup() {
     };
     const [errorStatus, setErrorStatus] = useState(initialSignUpErrorStatus);
     const router = useRouter();
-    const url = "https://edd-myfont-backend.herokuapp.com";
+    const url = "https://myfont.ottotto.tech";
     type signUpCheckElement = {
         name: string;
         mailAddress: string;
@@ -54,7 +52,7 @@ export default function Signup() {
                     }
                 );
                 document.cookie = "accessToken=" + response.data.jwt;
-                localStorage.setItem('jwt',response.data.jwt)
+                localStorage.setItem("jwt", response.data.jwt);
                 router.push("/");
             } catch (error) {
                 console.log(error.response);
@@ -73,7 +71,6 @@ export default function Signup() {
     };
     const signUpCheck = (event) => {
         event.preventDefault();
-        console.log(initialErrorState);
 
         let passwordPattern =
             /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}$/;
